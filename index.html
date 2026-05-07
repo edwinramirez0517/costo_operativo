@@ -16,43 +16,38 @@
         /* Marca de Agua */
         body::before {
             content: ""; position: fixed; top: 50%; left: 50%; width: 700px; height: 700px;
-            transform: translate(-50%, -50%); background-image: url('image_a79cab.png'); 
+            transform: translate(-50%, -50%); background-image: url('./image_a79cab.png'); 
             background-repeat: no-repeat; background-position: center; background-size: contain;
             opacity: 0.05; pointer-events: none; z-index: -1;
         }
 
-        /* Sidebar */
         .sidebar { min-height: 100vh; background-color: var(--azul); width: 260px; position: fixed; z-index: 100; }
         .logo-box { background: white; padding: 25px; text-align: center; border-bottom: 4px solid var(--rojo); }
-        .logo-box img { max-width: 100%; height: auto; object-fit: contain; } /* Ajuste forzado del logo */
+        .logo-box img { max-width: 100%; height: auto; object-fit: contain; }
         
-        /* Main Content */
         .main-content { margin-left: 260px; padding: 30px; }
-        
-        /* Cards y Estética */
-        .card-custom { border: none; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); background: white; margin-bottom: 20px; }
+        .card-custom { border: none; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); background: white; margin-bottom: 20px; }
         .kpi-title { font-size: 0.8rem; font-weight: 800; color: #6c757d; text-transform: uppercase; }
         .kpi-value { font-size: 1.5rem; font-weight: 900; color: var(--azul); }
 
         /* Estilo para los Dropdowns de Filtros */
         .filter-group { background: white; padding: 15px 20px; border-radius: 10px; border-left: 5px solid var(--rojo); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .dropdown-menu-custom { max-height: 250px; overflow-y: auto; width: 100%; min-width: 200px; padding: 10px; }
+        .dropdown-menu-custom { max-height: 250px; overflow-y: auto; width: 100%; min-width: 180px; padding: 10px; }
         .form-check-label { font-size: 0.85rem; cursor: pointer; }
 
-        /* Tabla Principal */
+        /* Tabla Diseño Avanzado */
+        .table-custom thead th { background-color: var(--azul) !important; color: white !important; font-weight: 600; }
         #tablaResumen tbody tr { cursor: pointer; transition: 0.2s; }
-        #tablaResumen tbody tr:hover { background-color: #f0f2f5 !important; transform: scale(1.01); }
+        #tablaResumen tbody tr:hover { background-color: #e9ecef !important; }
         
-        /* Modal Detalle */
         .modal-header { background-color: var(--azul); color: white; }
-        .modal-xl { max-width: 95%; }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
     <div class="logo-box">
-        <img src="image_a79fed.png" alt="Logo El Compadre" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h4 style=\'color:var(--azul); margin:0;\'>EL COMPADRE</h4>');">
+        <img src="logo_1.png" alt="Logo El Compadre" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h4 style=\'color:var(--azul); margin:0; font-weight:900;\'>EL COMPADRE</h4>');">
     </div>
     <div class="p-4 mt-4">
         <h6 class="text-white opacity-50 small fw-bold mb-3">MENÚ PRINCIPAL</h6>
@@ -64,35 +59,35 @@
 
 <div class="main-content">
     <div class="row align-items-center mb-4 g-3">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <h2 class="fw-black mb-0" style="color: var(--azul); letter-spacing: -1px;">Combustible 2026</h2>
         </div>
-        <div class="col-md-8">
-            <div class="filter-group d-flex gap-3 align-items-end justify-content-end">
+        <div class="col-md-9">
+            <div class="filter-group d-flex gap-3 align-items-end justify-content-end flex-wrap">
                 
-                <div class="dropdown flex-grow-1" style="max-width: 220px;">
-                    <label class="small fw-bold text-muted mb-1">Filtrar por Mes:</label>
-                    <button class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span>Seleccionar Meses</span>
-                        <i class="fas fa-chevron-down ms-2" style="font-size: 0.7rem;"></i>
+                <div class="dropdown flex-grow-1" style="max-width: 180px;">
+                    <label class="small fw-bold text-muted mb-1">Año:</label>
+                    <button class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center" data-bs-toggle="dropdown">
+                        <span>Seleccionar Año</span> <i class="fas fa-chevron-down ms-2" style="font-size: 0.7rem;"></i>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-custom shadow" id="filterMes">
-                        </div>
+                    <div class="dropdown-menu dropdown-menu-custom shadow" id="filterAno"></div>
                 </div>
 
-                <div class="dropdown flex-grow-1" style="max-width: 220px;">
-                    <label class="small fw-bold text-muted mb-1">Filtrar por Semana:</label>
-                    <button class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span>Seleccionar Semanas</span>
-                        <i class="fas fa-chevron-down ms-2" style="font-size: 0.7rem;"></i>
+                <div class="dropdown flex-grow-1" style="max-width: 180px;">
+                    <label class="small fw-bold text-muted mb-1">Mes:</label>
+                    <button class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center" data-bs-toggle="dropdown">
+                        <span>Seleccionar Mes</span> <i class="fas fa-chevron-down ms-2" style="font-size: 0.7rem;"></i>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-custom shadow" id="filterSemana">
-                        </div>
+                    <div class="dropdown-menu dropdown-menu-custom shadow" id="filterMes"></div>
                 </div>
 
-                <button class="btn btn-danger px-4" onclick="aplicarFiltros()" style="height: 38px;">
-                    <i class="fas fa-filter me-1"></i> Aplicar
-                </button>
+                <div class="dropdown flex-grow-1" style="max-width: 180px;">
+                    <label class="small fw-bold text-muted mb-1">Semana:</label>
+                    <button class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center" data-bs-toggle="dropdown">
+                        <span>Seleccionar Semana</span> <i class="fas fa-chevron-down ms-2" style="font-size: 0.7rem;"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-custom shadow" id="filterSemana"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -119,7 +114,7 @@
         <div class="col-md-3">
             <div class="card card-custom p-3 bg-danger text-white">
                 <div class="small fw-bold opacity-75">TOP DEPARTAMENTO</div>
-                <div class="h4 fw-900 mb-0 text-truncate" id="kpi-top">-</div>
+                <div class="h5 fw-bold mb-0 text-truncate" id="kpi-top">-</div>
             </div>
         </div>
     </div>
@@ -129,8 +124,8 @@
             <div class="card card-custom p-4">
                 <h5 class="fw-bold mb-4 text-secondary"><i class="fas fa-hand-pointer text-primary me-2"></i>Resumen General (Clic para detalles)</h5>
                 <div class="table-responsive">
-                    <table id="tablaResumen" class="table table-hover align-middle w-100">
-                        <thead class="table-light">
+                    <table id="tablaResumen" class="table table-striped table-bordered table-hover align-middle w-100 table-custom">
+                        <thead>
                             <tr>
                                 <th>Departamento</th>
                                 <th>Galones</th>
@@ -145,8 +140,8 @@
         </div>
         <div class="col-md-4">
             <div class="card card-custom p-4">
-                <h5 class="fw-bold mb-4 text-secondary">Tipo de Combustible</h5>
-                <div style="height: 300px;"><canvas id="chartTipos"></canvas></div>
+                <h5 class="fw-bold mb-4 text-secondary">Distribución de Gasto</h5>
+                <div style="height: 320px;"><canvas id="chartTipos"></canvas></div>
             </div>
         </div>
     </div>
@@ -160,27 +155,24 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
-                <div class="row mb-4 bg-light p-3 rounded g-2">
-                    <div class="col-md-3">
-                        <label class="small fw-bold">Año:</label>
-                        <select class="form-select form-select-sm" id="modalFiltroAño"></select>
+                <div class="row mb-4 bg-light p-3 rounded g-3 border">
+                    <div class="col-md-4">
+                        <label class="small fw-bold text-primary">Año:</label>
+                        <select class="form-select form-select-sm border-primary" id="modalFiltroAño"></select>
                     </div>
-                    <div class="col-md-3">
-                        <label class="small fw-bold">Mes:</label>
-                        <select class="form-select form-select-sm" id="modalFiltroMes"></select>
+                    <div class="col-md-4">
+                        <label class="small fw-bold text-primary">Mes:</label>
+                        <select class="form-select form-select-sm border-primary" id="modalFiltroMes"></select>
                     </div>
-                    <div class="col-md-3">
-                        <label class="small fw-bold">Semana:</label>
-                        <select class="form-select form-select-sm" id="modalFiltroSemana"></select>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-end">
-                        <button class="btn btn-primary btn-sm w-100" onclick="filtrarTablaModal()"><i class="fas fa-sync-alt me-1"></i> Actualizar Vista</button>
+                    <div class="col-md-4">
+                        <label class="small fw-bold text-primary">Semana:</label>
+                        <select class="form-select form-select-sm border-primary" id="modalFiltroSemana"></select>
                     </div>
                 </div>
                 
                 <div class="table-responsive">
-                    <table id="tablaModalDetalle" class="table table-striped w-100 small">
-                        <thead class="table-dark">
+                    <table id="tablaModalDetalle" class="table table-striped table-bordered table-hover w-100 small table-custom">
+                        <thead>
                             <tr>
                                 <th>Fecha</th>
                                 <th>Vehículo</th>
@@ -205,32 +197,43 @@
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
 <script>
+// Registrar Plugin de Etiquetas
+Chart.register(ChartDataLabels);
+
 let rawData = [], dtResumen, dtModal, chartTipos;
 let deptoActual = "";
 
 $(document).ready(function() {
+    // Configuración avanzada de Tablas (con selector de registros)
     dtResumen = $('#tablaResumen').DataTable({ 
         language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json' },
-        pageLength: 10, order: [[3, 'desc']], dom: 'rtp'
+        pageLength: 10,
+        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todas"]],
+        order: [[3, 'desc']]
     });
 
     dtModal = $('#tablaModalDetalle').DataTable({ 
         language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json' },
-        pageLength: 10
+        pageLength: 25,
+        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todas"]],
+        order: [[0, 'desc']]
     });
 
-    // Prevenir que los dropdowns se cierren al hacer clic en los checkboxes
-    $('.dropdown-menu').on('click', function(e) {
-        e.stopPropagation();
-    });
+    $('.dropdown-menu').on('click', function(e) { e.stopPropagation(); });
+
+    // Auto-aplicar filtros del Modal (Cascada)
+    $('#modalFiltroAño').on('change', function() { actualizarFiltrosModalCascada('ano'); filtrarTablaModal(); });
+    $('#modalFiltroMes').on('change', function() { actualizarFiltrosModalCascada('mes'); filtrarTablaModal(); });
+    $('#modalFiltroSemana').on('change', function() { filtrarTablaModal(); });
 
     cargarDatos();
 
     $('#tablaResumen tbody').on('click', 'tr', function() {
-        let depto = $(this).find('td:first').text();
-        abrirDetalle(depto);
+        let data = dtResumen.row(this).data();
+        if(data) abrirDetalle($(data[0]).text());
     });
 });
 
@@ -246,64 +249,67 @@ async function cargarDatos() {
         let l = Papa.parse(resL, config).data.map(r => ({...r, unidad: 'Lts'}));
         
         rawData = [...g, ...l];
-        poblarFiltros();
-        aplicarFiltros();
+        poblarFiltrosEstructura();
     } catch (e) { console.error("Error cargando archivos CSV", e); }
 }
 
-function poblarFiltros() {
+function poblarFiltrosEstructura() {
+    let años = [...new Set(rawData.map(r => r.AÑO))].filter(Boolean).sort();
     let meses = [...new Set(rawData.map(r => r.MES))].filter(Boolean);
     let semanas = [...new Set(rawData.map(r => r.SEMANA))].filter(Boolean);
-    let años = [...new Set(rawData.map(r => r.AÑO))].filter(Boolean);
-
-    // Ordenar semanas numéricamente
     semanas.sort((a,b) => (parseInt(a.replace(/\D/g, ''))||0) - (parseInt(b.replace(/\D/g, ''))||0));
 
-    // Llenar Dropdowns del Dashboard
-    $('#filterMes').html(`
-        <div class="form-check mb-2 border-bottom pb-2">
-            <input class="form-check-input" type="checkbox" id="checkAllMeses" checked onclick="toggleAll('filterMes', this)">
-            <label class="form-check-label fw-bold text-primary" for="checkAllMeses">Seleccionar Todos</label>
-        </div>
-    `);
-    meses.forEach(m => $('#filterMes').append(`
-        <div class="form-check">
-            <input class="form-check-input filter-checkbox" type="checkbox" value="${m}" checked id="mes_${m}">
-            <label class="form-check-label" for="mes_${m}">${m}</label>
-        </div>
-    `));
+    // Dashboard Dropdowns
+    $('#filterAno').html(`<div class="form-check mb-2 border-bottom pb-2"><input class="form-check-input chk-all" type="checkbox" checked onchange="toggleAll(this, 'filter-ano')"><label class="fw-bold text-primary">Todos</label></div>`);
+    años.forEach(a => $('#filterAno').append(`<div class="form-check filter-wrap"><input class="form-check-input filter-ano filter-chk" type="checkbox" value="${a}" checked><label class="form-check-label">${a}</label></div>`));
 
-    $('#filterSemana').html(`
-        <div class="form-check mb-2 border-bottom pb-2">
-            <input class="form-check-input" type="checkbox" id="checkAllSemanas" checked onclick="toggleAll('filterSemana', this)">
-            <label class="form-check-label fw-bold text-primary" for="checkAllSemanas">Seleccionar Todas</label>
-        </div>
-    `);
-    semanas.forEach(s => $('#filterSemana').append(`
-        <div class="form-check">
-            <input class="form-check-input filter-checkbox" type="checkbox" value="${s}" checked id="sem_${s}">
-            <label class="form-check-label" for="sem_${s}">${s}</label>
-        </div>
-    `));
+    $('#filterMes').html(`<div class="form-check mb-2 border-bottom pb-2"><input class="form-check-input chk-all" type="checkbox" checked onchange="toggleAll(this, 'filter-mes')"><label class="fw-bold text-primary">Todos</label></div>`);
+    meses.forEach(m => $('#filterMes').append(`<div class="form-check filter-wrap"><input class="form-check-input filter-mes filter-chk" type="checkbox" value="${m}" checked><label class="form-check-label">${m}</label></div>`));
 
-    // Llenar Selects del Modal
+    $('#filterSemana').html(`<div class="form-check mb-2 border-bottom pb-2"><input class="form-check-input chk-all" type="checkbox" checked onchange="toggleAll(this, 'filter-sem')"><label class="fw-bold text-primary">Todas</label></div>`);
+    semanas.forEach(s => $('#filterSemana').append(`<div class="form-check filter-wrap"><input class="form-check-input filter-sem filter-chk" type="checkbox" value="${s}" checked><label class="form-check-label">${s}</label></div>`));
+
+    // Modal Selects (Valores Base)
     $('#modalFiltroAño').append('<option value="TODOS">Todos</option>');
     años.forEach(a => $('#modalFiltroAño').append(`<option value="${a}">${a}</option>`));
-    $('#modalFiltroMes').append('<option value="TODOS">Todos</option>');
-    meses.forEach(m => $('#modalFiltroMes').append(`<option value="${m}">${m}</option>`));
-    $('#modalFiltroSemana').append('<option value="TODOS">Todos</option>');
-    semanas.forEach(s => $('#modalFiltroSemana').append(`<option value="${s}">${s}</option>`));
+
+    // Evento Automático para Cascada en el Dashboard principal
+    $('.filter-chk').on('change', aplicarFiltrosCascada);
+    
+    aplicarFiltrosCascada(); // Ejecutar primera vez
 }
 
-function toggleAll(containerId, source) {
-    $(`#${containerId} .filter-checkbox`).prop('checked', source.checked);
+function toggleAll(source, classTarget) {
+    $(`.${classTarget}`).prop('checked', source.checked);
+    aplicarFiltrosCascada();
 }
 
-function aplicarFiltros() {
-    let mesesSel = $('#filterMes .filter-checkbox:checked').map(function() { return $(this).val(); }).get();
-    let semanasSel = $('#filterSemana .filter-checkbox:checked').map(function() { return $(this).val(); }).get();
+// LOGICA DE FILTRO EN CASCADA AUTOMÁTICO (DASHBOARD)
+function aplicarFiltrosCascada() {
+    let anosSel = $('.filter-ano:checked').map(function() { return $(this).val(); }).get();
 
-    let filtrados = rawData.filter(r => mesesSel.includes(r.MES) && semanasSel.includes(r.SEMANA));
+    // Actualizar Meses Visibles según Año
+    let validMeses = new Set(rawData.filter(r => anosSel.includes(r.AÑO)).map(r => r.MES));
+    $('.filter-mes').closest('.filter-wrap').each(function() {
+        let val = $(this).find('input').val();
+        if (validMeses.has(val)) { $(this).show(); } 
+        else { $(this).hide(); $(this).find('input').prop('checked', false); }
+    });
+
+    let mesesSel = $('.filter-mes:checked').map(function() { return $(this).val(); }).get();
+
+    // Actualizar Semanas Visibles según Año y Mes
+    let validSemanas = new Set(rawData.filter(r => anosSel.includes(r.AÑO) && mesesSel.includes(r.MES)).map(r => r.SEMANA));
+    $('.filter-sem').closest('.filter-wrap').each(function() {
+        let val = $(this).find('input').val();
+        if (validSemanas.has(val)) { $(this).show(); } 
+        else { $(this).hide(); $(this).find('input').prop('checked', false); }
+    });
+
+    let semSel = $('.filter-sem:checked').map(function() { return $(this).val(); }).get();
+
+    // Procesar datos finales con la nueva selección
+    let filtrados = rawData.filter(r => anosSel.includes(r.AÑO) && mesesSel.includes(r.MES) && semSel.includes(r.SEMANA));
     procesarDashboard(filtrados);
 }
 
@@ -325,14 +331,12 @@ function procesarDashboard(datos) {
         tipos[tipo] = (tipos[tipo] || 0) + valor;
     });
 
-    // Actualizar KPIs
     $('#kpi-total').text('L. ' + totalLps.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
     $('#kpi-galones').text(totalGal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
     $('#kpi-litros').text(totalLit.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
     let top = Object.keys(resumen).length > 0 ? Object.keys(resumen).reduce((a, b) => resumen[a].costo > resumen[b].costo ? a : b) : '-';
     $('#kpi-top').text(top);
 
-    // Llenar Tabla
     dtResumen.clear();
     for (let d in resumen) {
         dtResumen.row.add([
@@ -355,17 +359,64 @@ function actualizarGrafico(tipos) {
             labels: Object.keys(tipos),
             datasets: [{ data: Object.values(tipos), backgroundColor: ['#E1251B', '#012094', '#FFCE56', '#2ecc71'] }]
         },
-        options: { responsive: true, maintainAspectRatio: false, cutout: '60%' }
+        options: { 
+            responsive: true, maintainAspectRatio: false, cutout: '60%',
+            plugins: {
+                datalabels: {
+                    color: '#fff',
+                    font: { weight: 'bold', size: 14 },
+                    formatter: (value, ctx) => {
+                        let sum = 0;
+                        ctx.chart.data.datasets[0].data.forEach(data => sum += data);
+                        let percentage = (value * 100 / sum).toFixed(1) + "%";
+                        return percentage;
+                    }
+                }
+            }
+        }
     });
 }
 
 function abrirDetalle(depto) {
-    // Quitar etiquetas HTML del string del departamento (por el <span>)
     deptoActual = $('<div>').html(depto).text(); 
     $('#modalTitle').text('Detalles: ' + deptoActual);
-    $('#modalFiltroAño, #modalFiltroMes, #modalFiltroSemana').val('TODOS');
+    
+    // Resetear Modal Filtros
+    $('#modalFiltroAño').val('TODOS');
+    actualizarFiltrosModalCascada('ano');
+    $('#modalFiltroMes').val('TODOS');
+    actualizarFiltrosModalCascada('mes');
+    $('#modalFiltroSemana').val('TODOS');
+    
     filtrarTablaModal();
     new bootstrap.Modal('#modalDetalle').show();
+}
+
+// LOGICA DE CASCADA PARA EL MODAL (AUTO APLICABLE)
+function actualizarFiltrosModalCascada(origen) {
+    let añoSel = $('#modalFiltroAño').val();
+    let mesSel = $('#modalFiltroMes').val();
+
+    let datosAislados = rawData.filter(r => (r.SOLICITANTE || 'sin espesificar') === deptoActual);
+
+    if (origen === 'ano') {
+        let mesesPermitidos = new Set(datosAislados.filter(r => añoSel === 'TODOS' || r.AÑO === añoSel).map(r => r.MES));
+        $('#modalFiltroMes').html('<option value="TODOS">Todos</option>');
+        [...mesesPermitidos].filter(Boolean).forEach(m => $('#modalFiltroMes').append(`<option value="${m}">${m}</option>`));
+        $('#modalFiltroMes').val('TODOS');
+        mesSel = 'TODOS';
+    }
+
+    if (origen === 'ano' || origen === 'mes') {
+        let semPermitidas = new Set(datosAislados.filter(r => 
+            (añoSel === 'TODOS' || r.AÑO === añoSel) && (mesSel === 'TODOS' || r.MES === mesSel)
+        ).map(r => r.SEMANA));
+        
+        let semOrdenadas = [...semPermitidas].filter(Boolean).sort((a,b) => (parseInt(a.replace(/\D/g, ''))||0) - (parseInt(b.replace(/\D/g, ''))||0));
+        $('#modalFiltroSemana').html('<option value="TODOS">Todas</option>');
+        semOrdenadas.forEach(s => $('#modalFiltroSemana').append(`<option value="${s}">${s}</option>`));
+        $('#modalFiltroSemana').val('TODOS');
+    }
 }
 
 function filtrarTablaModal() {
@@ -387,9 +438,7 @@ function filtrarTablaModal() {
         let valor = parseFloat(r['TOTAL VALOR LPS']?.replace(/[L\s,]/g, '')) || 0;
         
         dtModal.row.add([
-            r.FECHA || '-', 
-            r.VEHICULO || 'sin espesificar', 
-            r['#PLACA'] || '-',
+            r.FECHA || '-', r.VEHICULO || 'sin espesificar', r['#PLACA'] || '-',
             r.COMBUSTIBLE || 'sin espesificar', 
             cant.toLocaleString('en-US', {minimumFractionDigits: 2}) + ' ' + r.unidad,
             'L. ' + valor.toLocaleString('en-US', {minimumFractionDigits: 2}), 
