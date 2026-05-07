@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Gerencial - El Compadre</title>
+    <title>Sistema de Control de Combustible - El Compadre</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,157 +15,162 @@
             --rojo-compadre: #E1251B;
         }
         body {
-            background-color: #f4f6f9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+        /* Marca de Agua */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            transform: translate(-50%, -50%);
+            background-image: url('image_a79cab.png'); /* Archivo de marca de agua */
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            opacity: 0.03; /* Muy sutil */
+            pointer-events: none;
+            z-index: -1;
         }
         .sidebar {
             min-height: 100vh;
             background-color: var(--azul-compadre);
-            color: white;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
         }
-        .sidebar a {
+        .nav-link {
             color: #d1d8f0;
-            text-decoration: none;
-            padding: 15px;
-            display: block;
-            transition: 0.3s;
-            font-weight: 500;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        .sidebar a:hover, .sidebar a.active {
-            background-color: #011875;
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255,255,255,0.1);
             color: white;
-            border-left: 4px solid var(--rojo-compadre);
+            border-left: 5px solid var(--rojo-compadre);
         }
-        .kpi-card {
+        .card-kpi {
             border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--azul-compadre);
         }
-        .kpi-card:hover {
-            transform: translateY(-5px);
-        }
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-        .bg-compadre-blue { background-color: var(--azul-compadre) !important; }
-        .bg-compadre-red { background-color: var(--rojo-compadre) !important; }
-        .text-compadre-blue { color: var(--azul-compadre) !important; }
-        .text-compadre-red { color: var(--rojo-compadre) !important; }
-        .chart-container {
+        .bg-gradient-red { background: linear-gradient(135deg, var(--rojo-compadre), #b31d16); color: white; }
+        .logo-container {
             background: white;
-            border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            text-align: center;
         }
+        .logo-container img {
+            max-width: 150px;
+            height: auto;
+        }
+        .chart-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .tab-content { padding-top: 20px; }
     </style>
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
-        <nav class="col-md-2 d-none d-md-block sidebar p-0">
-            <div class="p-4 text-center border-bottom border-secondary" style="background-color: white;">
-                <h4 class="m-0 text-compadre-blue" style="font-weight: 900;">EL COMPADRE</h4>
-            </div>
-            <div class="mt-3">
-                <a href="#" class="active"><i class="fas fa-gas-pump me-2"></i> Combustible</a>
-                <a href="#"><i class="fas fa-users me-2"></i> Salarios</a>
-                <a href="#"><i class="fas fa-box-open me-2"></i> Suministros</a>
+        <nav class="col-md-2 d-none d-md-block sidebar p-0 fixed-top">
+            <div class="logo-container">
+                <img src="image_a79fed.png" alt="Logo El Compadre"> </div>
+            <div class="nav flex-column mt-4">
+                <a class="nav-link active" data-bs-toggle="tab" href="#resumen">
+                    <i class="fas fa-tachometer-alt me-2"></i> Resumen General
+                </a>
+                <a class="nav-link" data-bs-toggle="tab" href="#detalles">
+                    <i class="fas fa-list-ul me-2"></i> Detalle de Consumo
+                </a>
+                <a class="nav-link" href="#"><i class="fas fa-user-tie me-2"></i> Gerencia</a>
             </div>
         </nav>
 
         <main class="col-md-10 ms-sm-auto px-md-4 py-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-                <h1 class="h2 text-compadre-blue" style="font-weight: bold;">Dashboard de Costos</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <select class="form-select me-2" id="filtroClasificacion">
-                        <option value="TODOS">MAYOREO Y DETALLE</option>
-                        <option value="MAYOREO">SOLO MAYOREO</option>
-                        <option value="DETALLE">SOLO DETALLE</option>
+            <div class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom">
+                <h1 class="h3" style="color: var(--azul-compadre); font-weight: 800;">CONTROL LOGÍSTICO 2026</h1>
+                <div class="d-flex gap-2">
+                    <select class="form-select w-auto" id="filtroTienda">
+                        <option value="TODO">MAYOREO Y DETALLE</option>
+                        <option value="MAYOREO">MAYOREO</option>
+                        <option value="DETALLE">DETALLE</option>
                     </select>
-                    <button class="btn" style="background-color: var(--rojo-compadre); color: white;" id="btnLoad">
-                        <i class="fas fa-sync me-1"></i> Actualizar Datos
+                    <button class="btn btn-danger" onclick="procesarArchivos()">
+                        <i class="fas fa-sync-alt"></i> Actualizar
                     </button>
                 </div>
             </div>
 
-            <div id="loading" class="text-center mb-4 text-compadre-blue">
-                <div class="spinner-border" role="status"></div>
-                <p>Leyendo archivos CSV desde GitHub...</p>
-            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="resumen">
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-3">
+                            <div class="card card-kpi p-3 text-center">
+                                <small class="text-muted fw-bold">COSTO TOTAL LPS</small>
+                                <h3 class="mt-2 mb-0" id="val-costo" style="color: var(--azul-compadre);">L. 0.00</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card card-kpi p-3 text-center">
+                                <small class="text-muted fw-bold">TOTAL GALONES</small>
+                                <h3 class="mt-2 mb-0 text-success" id="val-galones">0.00 Gal</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card card-kpi p-3 text-center">
+                                <small class="text-muted fw-bold">TOTAL LITROS</small>
+                                <h3 class="mt-2 mb-0 text-info" id="val-litros">0.00 Lts</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card card-kpi p-3 text-center bg-gradient-red text-white">
+                                <small class="fw-bold">MAYOR SOLICITANTE</small>
+                                <h4 class="mt-2 mb-0" id="val-top-depto">-</h4>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="row mb-4" id="kpi-section" style="display:none;">
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card kpi-card h-100 py-2 border-left-primary">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-compadre-blue text-uppercase mb-1">Costo Total (Lps)</div>
-                                    <div class="h4 mb-0 font-weight-bold text-gray-800" id="kpi-costo-total">L. 0.00</div>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon-box bg-compadre-blue text-white"><i class="fas fa-money-bill-wave"></i></div>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="chart-box">
+                                <h6 class="fw-bold text-muted mb-3">GASTO POR DEPARTAMENTO</h6>
+                                <canvas id="chartDeptos" height="280"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="chart-box">
+                                <h6 class="fw-bold text-muted mb-3">TIPO DE COMBUSTIBLE</h6>
+                                <canvas id="chartTipos" height="280"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card kpi-card h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-compadre-red text-uppercase mb-1">Mayor Consumidor</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="kpi-mayor-consumidor">-</div>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon-box bg-compadre-red text-white"><i class="fas fa-truck"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card kpi-card h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Registros Procesados</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" id="kpi-registros">0</div>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon-box bg-success text-white"><i class="fas fa-database"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="row mt-2" id="table-section" style="display:none;">
-                <div class="col-12">
-                    <div class="chart-container">
-                        <h5 class="text-compadre-blue mb-4" style="font-weight: bold;">Gasto Consolidado por Departamento</h5>
+                <div class="tab-pane fade" id="detalles">
+                    <div class="chart-box">
                         <div class="table-responsive">
-                            <table id="tablaGeneral" class="table table-striped table-bordered" style="width:100%">
-                                <thead>
+                            <table id="tablaDetallada" class="table table-hover w-100">
+                                <thead class="table-dark" style="background-color: var(--azul-compadre);">
                                     <tr>
-                                        <th>Departamento (Solicitante)</th>
-                                        <th>Total Galones (Lps)</th>
-                                        <th>Total Litros (Lps)</th>
-                                        <th>Gasto General (Lps)</th>
+                                        <th>Fecha</th>
+                                        <th>Solicitante</th>
+                                        <th>Vehículo</th>
+                                        <th>Tipo</th>
+                                        <th>Cant.</th>
+                                        <th>Costo (Lps)</th>
+                                        <th>Proveedor</th>
                                     </tr>
                                 </thead>
-                                <tbody id="tablaCuerpo">
-                                </tbody>
+                                <tbody id="cuerpoDetalle"></tbody>
                             </table>
                         </div>
                     </div>
@@ -180,118 +185,131 @@
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    let dataTable;
+    let chart1, chart2, dataTable;
 
     $(document).ready(function() {
-        cargarDatosCSV();
-
-        $('#btnLoad').click(function() {
-            cargarDatosCSV();
-        });
+        procesarArchivos();
     });
 
-    function cargarDatosCSV() {
-        $('#loading').show();
-        $('#kpi-section, #table-section').hide();
-
-        // Leer ambos archivos alojados en el mismo repositorio de GitHub
-        Promise.all([
-            fetch('combustible_galon.csv').then(res => res.text()).catch(() => ""),
-            fetch('combustible_litro.csv').then(res => res.text()).catch(() => "")
-        ]).then(responses => {
-            
-            // Parsear con delimitador de punto y coma (;)
-            const config = { header: true, delimiter: ";", skipEmptyLines: true };
-            const galonesData = Papa.parse(responses[0], config).data;
-            const litrosData = Papa.parse(responses[1], config).data;
-
-            procesarYMostrarDatos(galonesData, litrosData);
-        });
-    }
-
-    function limpiarNumero(valor) {
-        if (!valor) return 0;
-        // Eliminar comas, "L", espacios y convertir a float
-        let numStr = valor.toString().replace(/[L\s,]/g, '');
-        let num = parseFloat(numStr);
-        return isNaN(num) ? 0 : num;
-    }
-
-    function procesarYMostrarDatos(galonesData, litrosData) {
-        let resumenDepartamentos = {};
-        let totalGeneral = 0;
-
-        // Procesar Galones
-        galonesData.forEach(row => {
-            let depto = row['SOLICITANTE'] || row['solicitante'] || 'SIN ESPECIFICAR';
-            let valor = limpiarNumero(row['TOTAL VALOR LPS']);
-            
-            if (!resumenDepartamentos[depto]) {
-                resumenDepartamentos[depto] = { galones: 0, litros: 0, total: 0 };
-            }
-            resumenDepartamentos[depto].galones += valor;
-            resumenDepartamentos[depto].total += valor;
-            totalGeneral += valor;
-        });
-
-        // Procesar Litros
-        litrosData.forEach(row => {
-            let depto = row['SOLICITANTE'] || row['solicitante'] || 'SIN ESPECIFICAR';
-            let valor = limpiarNumero(row['TOTAL VALOR LPS']);
-            
-            if (!resumenDepartamentos[depto]) {
-                resumenDepartamentos[depto] = { galones: 0, litros: 0, total: 0 };
-            }
-            resumenDepartamentos[depto].litros += valor;
-            resumenDepartamentos[depto].total += valor;
-            totalGeneral += valor;
-        });
-
-        // Actualizar UI
-        $('#kpi-costo-total').text('L. ' + totalGeneral.toLocaleString('es-HN', {minimumFractionDigits: 2}));
-        $('#kpi-registros').text(galonesData.length + litrosData.length);
-
-        // Encontrar Mayor Consumidor
-        let mayorConsumidor = '-';
-        let maxValor = 0;
+    async function procesarArchivos() {
+        const config = { header: true, delimiter: ";", skipEmptyLines: true };
         
-        let htmlTabla = '';
-        for (let depto in resumenDepartamentos) {
-            let d = resumenDepartamentos[depto];
-            if (d.total > maxValor) {
-                maxValor = d.total;
-                mayorConsumidor = depto;
-            }
-            
-            htmlTabla += `<tr>
-                <td class="fw-bold">${depto}</td>
-                <td>L. ${d.galones.toLocaleString('es-HN', {minimumFractionDigits: 2})}</td>
-                <td>L. ${d.litros.toLocaleString('es-HN', {minimumFractionDigits: 2})}</td>
-                <td class="text-compadre-blue fw-bold">L. ${d.total.toLocaleString('es-HN', {minimumFractionDigits: 2})}</td>
+        try {
+            const [resGal, resLit] = await Promise.all([
+                fetch('combustible_galon.csv').then(r => r.text()),
+                fetch('combustible_litro.csv').then(r => r.text())
+            ]);
+
+            let dataGal = Papa.parse(resGal, config).data;
+            let dataLit = Papa.parse(resLit, config).data;
+
+            actualizarDashboard(dataGal, dataLit);
+        } catch (e) {
+            console.error("Error cargando archivos", e);
+        }
+    }
+
+    function parseNum(val) {
+        if (!val) return 0;
+        return parseFloat(val.toString().replace(/[L\s,]/g, '')) || 0;
+    }
+
+    function actualizarDashboard(galones, litros) {
+        let totalLps = 0, totalGal = 0, totalLit = 0;
+        let deptos = {}, tipos = {};
+        let tablaHtml = '';
+        const filtro = $('#filtroTienda').val();
+
+        // Unificar datos
+        const todos = [
+            ...galones.map(d => ({...d, unidad_medida: 'Gal'})),
+            ...litros.map(d => ({...d, unidad_medida: 'Lts'}))
+        ];
+
+        todos.forEach(item => {
+            // Regla de negocio: Agrupar bodegas en MAYOREO si es necesario
+            let solicitante = item.SOLICITANTE || 'sin espesificar';
+            let valor = parseNum(item['TOTAL VALOR LPS']);
+            let cantidad = parseNum(item.ABASTECIDO);
+            let tipoC = item.COMBUSTIBLE || 'OTRO';
+
+            // Filtro dinámico
+            if (filtro !== 'TODO' && solicitante.toUpperCase() !== filtro) return;
+
+            totalLps += valor;
+            if (item.unidad_medida === 'Gal') totalGal += cantidad;
+            else totalLit += cantidad;
+
+            // Agrupación para gráficos
+            deptos[solicitante] = (deptos[solicitante] || 0) + valor;
+            tipos[tipoC] = (tipos[tipoC] || 0) + valor;
+
+            // Fila para tabla detallada
+            tablaHtml += `<tr>
+                <td>${item.FECHA || '-'}</td>
+                <td>${solicitante}</td>
+                <td>${item.VEHICULO || 'sin espesificar'}</td>
+                <td><span class="badge ${item.unidad_medida === 'Gal' ? 'bg-success' : 'bg-info'}">${item.unidad_medida}</span></td>
+                <td>${cantidad.toFixed(2)}</td>
+                <td class="fw-bold">L. ${valor.toLocaleString()}</td>
+                <td><small>${item.PROVEEDOR || '-'}</small></td>
             </tr>`;
-        }
-
-        $('#kpi-mayor-consumidor').text(mayorConsumidor);
-        
-        // Renderizar Tabla
-        if(dataTable) {
-            dataTable.destroy();
-        }
-        
-        $('#tablaCuerpo').html(htmlTabla);
-        
-        dataTable = $('#tablaGeneral').DataTable({
-            language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json' },
-            order: [[ 3, "desc" ]], // Ordenar por la columna de Gasto General de mayor a menor
-            pageLength: 10
         });
 
-        $('#loading').hide();
-        $('#kpi-section, #table-section').fadeIn();
+        // Actualizar KPIs
+        $('#val-costo').text(`L. ${totalLps.toLocaleString(undefined, {minimumFractionDigits: 2})}`);
+        $('#val-galones').text(`${totalGal.toFixed(2)} Gal`);
+        $('#val-litros').text(`${totalLit.toFixed(2)} Lts`);
+        
+        let topDepto = Object.keys(deptos).reduce((a, b) => deptos[a] > deptos[b] ? a : b, '-');
+        $('#val-top-depto').text(topDepto);
+
+        // Renderizar Tabla
+        if (dataTable) dataTable.destroy();
+        $('#cuerpoDetalle').html(tablaHtml);
+        dataTable = $('#tablaDetallada').DataTable({
+            pageLength: 10,
+            order: [[0, 'desc']],
+            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json' }
+        });
+
+        renderCharts(deptos, tipos);
+    }
+
+    function renderCharts(deptos, tipos) {
+        if (chart1) chart1.destroy();
+        if (chart2) chart2.destroy();
+
+        const ctx1 = document.getElementById('chartDeptos').getContext('2d');
+        chart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(deptos),
+                datasets: [{
+                    label: 'Gasto en Lps',
+                    data: Object.values(deptos),
+                    backgroundColor: '#012094'
+                }]
+            },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false }
+        });
+
+        const ctx2 = document.getElementById('chartTipos').getContext('2d');
+        chart2 = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(tipos),
+                datasets: [{
+                    data: Object.values(tipos),
+                    backgroundColor: ['#E1251B', '#012094', '#ffc107', '#28a745']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
     }
 </script>
-
 </body>
 </html>
