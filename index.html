@@ -14,79 +14,25 @@
             --azul-compadre: #012094;
             --rojo-compadre: #E1251B;
         }
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            overflow-x: hidden;
-        }
-        /* Marca de Agua */
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Roboto, sans-serif; overflow-x: hidden; }
         body::before {
-            content: "";
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 800px;
-            height: 800px;
-            transform: translate(-50%, -50%);
-            background-image: url('image_a79cab.png'); 
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            opacity: 0.04; 
-            pointer-events: none;
-            z-index: -1;
+            content: ""; position: fixed; top: 50%; left: 50%; width: 800px; height: 800px;
+            transform: translate(-50%, -50%); background-image: url('image_a79cab.png'); 
+            background-repeat: no-repeat; background-position: center; background-size: contain;
+            opacity: 0.04; pointer-events: none; z-index: -1;
         }
-        .sidebar {
-            min-height: 100vh;
-            background-color: var(--azul-compadre);
-            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
-        }
-        .nav-link {
-            color: #d1d8f0;
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            cursor: pointer;
-        }
-        .nav-link:hover, .nav-link.active {
-            background-color: rgba(255,255,255,0.1);
-            color: white;
-            border-left: 5px solid var(--rojo-compadre);
-        }
-        .card-kpi {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--azul-compadre);
-            background: rgba(255, 255, 255, 0.95);
-        }
-        .bg-gradient-red { 
-            background: linear-gradient(135deg, var(--rojo-compadre), #b31d16); 
-            color: white; 
-        }
-        .logo-container {
-            background: white;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 3px solid var(--rojo-compadre);
-        }
-        .logo-container img {
-            max-width: 160px;
-            height: auto;
-        }
-        .chart-box {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-            width: 100%;
-        }
-        .file-upload-wrapper {
-            background: #e9ecef;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px dashed var(--azul-compadre);
-        }
+        .sidebar { min-height: 100vh; background-color: var(--azul-compadre); box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
+        .nav-link { color: #d1d8f0; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
+        .nav-link:hover, .nav-link.active { background-color: rgba(255,255,255,0.1); color: white; border-left: 5px solid var(--rojo-compadre); }
+        .card-kpi { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-top: 4px solid var(--azul-compadre); background: white; }
+        .bg-gradient-red { background: linear-gradient(135deg, var(--rojo-compadre), #b31d16); color: white; }
+        .logo-container { background: white; padding: 20px; text-align: center; border-bottom: 3px solid var(--rojo-compadre); }
+        .logo-container img { max-width: 160px; height: auto; }
+        .chart-box { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; width: 100%; }
+        
+        /* Efecto hover para tabla resumen */
+        #tablaResumen tbody tr { cursor: pointer; transition: background-color 0.2s; }
+        #tablaResumen tbody tr:hover { background-color: #e9ecef; }
     </style>
 </head>
 <body>
@@ -97,12 +43,12 @@
             <div class="logo-container">
                 <img src="image_a79fed.png" alt="Logo El Compadre">
             </div>
-            <div class="nav flex-column mt-4 nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active" id="resumen-tab" data-bs-toggle="pill" data-bs-target="#resumen" role="tab" aria-controls="resumen" aria-selected="true">
-                    <i class="fas fa-tachometer-alt me-2"></i> Resumen General
+            <div class="nav flex-column mt-4 nav-pills" id="v-pills-tab" role="tablist">
+                <a class="nav-link active" id="resumen-tab" data-bs-toggle="pill" data-bs-target="#resumen" role="tab">
+                    <i class="fas fa-chart-pie me-2"></i> Dashboard Principal
                 </a>
-                <a class="nav-link" id="detalles-tab" data-bs-toggle="pill" data-bs-target="#detalles" role="tab" aria-controls="detalles" aria-selected="false">
-                    <i class="fas fa-table me-2"></i> Detalle de Consumo
+                <a class="nav-link" id="detalles-tab" data-bs-toggle="pill" data-bs-target="#detalles" role="tab">
+                    <i class="fas fa-list me-2"></i> Detalle de Consumo
                 </a>
             </div>
         </nav>
@@ -110,97 +56,109 @@
         <main class="col-md-10 ms-sm-auto px-md-4 py-4" style="margin-left: 250px !important;">
             
             <div class="d-flex justify-content-between align-items-center pb-3 mb-4 border-bottom">
-                <h1 class="h3 mb-0" style="color: var(--azul-compadre); font-weight: 800;">CONTROL LOGÍSTICO 2026</h1>
+                <h1 class="h4 mb-0" style="color: var(--azul-compadre); font-weight: 800;">CONTROL LOGÍSTICO</h1>
                 
-                <div class="d-flex gap-3 align-items-center">
-                    <div class="file-upload-wrapper d-flex align-items-center gap-2">
-                        <i class="fas fa-file-csv text-primary fs-4"></i>
-                        <div>
-                            <label for="csvFileInput" class="form-label mb-0 fw-bold" style="font-size: 0.85rem;">Cargar Archivos CSV (Galones y Litros)</label>
-                            <input class="form-control form-control-sm" type="file" id="csvFileInput" accept=".csv" multiple>
-                        </div>
+                <div class="d-flex gap-2 align-items-center">
+                    <div id="loadingIndicator" class="text-primary fw-bold me-3" style="display:none;">
+                        <i class="fas fa-spinner fa-spin"></i> Actualizando...
                     </div>
-
-                    <div class="d-flex flex-column">
-                        <label class="form-label mb-0 fw-bold" style="font-size: 0.85rem;">Filtro de Tienda</label>
-                        <select class="form-select form-select-sm border-primary" id="filtroTienda">
-                            <option value="TODOS">AMBOS (MAYOREO Y DETALLE)</option>
-                            <option value="MAYOREO">MAYOREO</option>
-                            <option value="DETALLE">DETALLE</option>
-                        </select>
-                    </div>
+                    <select class="form-select form-select-sm border-primary" id="filtroMes">
+                        <option value="TODOS">Todos los Meses</option>
+                    </select>
+                    <select class="form-select form-select-sm border-primary" id="filtroSemana">
+                        <option value="TODAS">Todas las Semanas</option>
+                    </select>
+                    <select class="form-select form-select-sm border-primary" id="filtroTienda">
+                        <option value="TODOS">MAYOREO Y DETALLE</option>
+                        <option value="MAYOREO">SOLO MAYOREO</option>
+                        <option value="DETALLE">SOLO DETALLE</option>
+                    </select>
                 </div>
             </div>
 
             <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="resumen" role="tabpanel" aria-labelledby="resumen-tab">
-                    <div class="row g-4 mb-4">
+                <div class="tab-pane fade show active" id="resumen" role="tabpanel">
+                    <div class="row g-3 mb-3">
                         <div class="col-md-3">
                             <div class="card card-kpi p-3 text-center">
                                 <small class="text-muted fw-bold">COSTO TOTAL LPS</small>
-                                <h3 class="mt-2 mb-0" id="val-costo" style="color: var(--azul-compadre);">L. 0.00</h3>
+                                <h4 class="mt-2 mb-0" id="val-costo" style="color: var(--azul-compadre);">L. 0.00</h4>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="card card-kpi p-3 text-center">
-                                <small class="text-muted fw-bold">TOTAL GALONES</small>
-                                <h3 class="mt-2 mb-0 text-success" id="val-galones">0.00 Gal</h3>
+                                <small class="text-muted fw-bold">VOLUMEN TOTAL</small>
+                                <h4 class="mt-2 mb-0 text-success"><span id="val-galones">0</span> Gal / <span id="val-litros">0</span> Lts</h4>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="card card-kpi p-3 text-center">
-                                <small class="text-muted fw-bold">TOTAL LITROS</small>
-                                <h3 class="mt-2 mb-0 text-info" id="val-litros">0.00 Lts</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card card-kpi p-3 text-center bg-gradient-red text-white">
-                                <small class="fw-bold">MAYOR SOLICITANTE</small>
-                                <h4 class="mt-2 mb-0 text-truncate" id="val-top-depto">-</h4>
+                        <div class="col-md-6">
+                            <div class="card card-kpi p-3 bg-gradient-red text-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <small class="fw-bold">MAYOR CONSUMIDOR</small>
+                                        <h4 class="mt-1 mb-0" id="val-top-depto">-</h4>
+                                    </div>
+                                    <i class="fas fa-trophy fa-2x opacity-50"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-5">
+                            <div class="chart-box mb-3">
+                                <h6 class="fw-bold text-muted mb-3">TIPO DE COMBUSTIBLE</h6>
+                                <div style="height: 250px;"><canvas id="chartTipos"></canvas></div>
+                            </div>
                             <div class="chart-box">
-                                <h6 class="fw-bold text-muted mb-3"><i class="fas fa-chart-bar me-2"></i>GASTO POR DEPARTAMENTO</h6>
-                                <div style="height: 350px;">
-                                    <canvas id="chartDeptos"></canvas>
-                                </div>
+                                <h6 class="fw-bold text-muted mb-3">TENDENCIA POR SEMANA</h6>
+                                <div style="height: 250px;"><canvas id="chartTendencia"></canvas></div>
                             </div>
                         </div>
-                        <div class="col-md-5">
-                            <div class="chart-box">
-                                <h6 class="fw-bold text-muted mb-3"><i class="fas fa-chart-pie me-2"></i>TIPO DE COMBUSTIBLE</h6>
-                                <div style="height: 350px;">
-                                    <canvas id="chartTipos"></canvas>
+                        <div class="col-md-7">
+                            <div class="chart-box h-100">
+                                <h6 class="fw-bold text-muted mb-3"><i class="fas fa-hand-pointer me-2 text-primary"></i>RESUMEN POR DEPARTAMENTO (Clic para ver detalle)</h6>
+                                <div class="table-responsive">
+                                    <table id="tablaResumen" class="table table-hover align-middle w-100">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Departamento</th>
+                                                <th>Galones</th>
+                                                <th>Litros</th>
+                                                <th>Costo Total (Lps)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="tab-pane fade" id="detalles" role="tabpanel" aria-labelledby="detalles-tab">
+                <div class="tab-pane fade" id="detalles" role="tabpanel">
                     <div class="chart-box">
-                        <h6 class="fw-bold text-muted mb-4"><i class="fas fa-table me-2"></i>REGISTRO DETALLADO DE COMBUSTIBLE</h6>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h6 class="fw-bold text-muted mb-0"><i class="fas fa-table me-2"></i>REGISTRO DETALLADO</h6>
+                            <button class="btn btn-sm btn-outline-secondary" id="btnLimpiarFiltro" style="display:none;">
+                                <i class="fas fa-times me-1"></i> Quitar filtro de departamento
+                            </button>
+                        </div>
                         <div class="table-responsive">
                             <table id="tablaDetallada" class="table table-hover table-striped w-100 align-middle">
                                 <thead style="background-color: var(--azul-compadre); color: white;">
                                     <tr>
                                         <th>Fecha</th>
+                                        <th>Semana</th>
                                         <th>Solicitante</th>
                                         <th>Vehículo / Placa</th>
                                         <th>Tipo Comb.</th>
                                         <th>Unidad</th>
                                         <th>Cantidad</th>
                                         <th>Total (Lps)</th>
-                                        <th>Proveedor</th>
                                     </tr>
                                 </thead>
-                                <tbody id="cuerpoDetalle">
-                                    <tr><td colspan="8" class="text-center text-muted">Carga los archivos CSV para visualizar los datos...</td></tr>
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -216,7 +174,6 @@
 <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script src="app.js"></script>
 </body>
 </html>
