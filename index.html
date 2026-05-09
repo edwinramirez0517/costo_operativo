@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Combustible - El Compadre</title>
+    <title>Dashboard Gerencial de Combustible - El Compadre</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,7 +13,6 @@
         :root { --azul: #012094; --rojo: #E1251B; --gris: #f4f7f6; }
         body { background-color: var(--gris); font-family: 'Segoe UI', Tahoma, sans-serif; }
         
-        /* MARCA DE AGUA - Asegúrate que el archivo se llame marca_agua.png */
         body::before {
             content: ""; position: fixed; top: 50%; left: 50%; width: 700px; height: 700px;
             transform: translate(-50%, -50%); background-image: url('marca_agua.png'); 
@@ -27,13 +26,14 @@
         
         .main-content { margin-left: 260px; padding: 30px; }
         .card-custom { border: none; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); background: white; margin-bottom: 20px; }
-        .kpi-title { font-size: 0.8rem; font-weight: 800; color: #6c757d; text-transform: uppercase; }
-        .kpi-value { font-size: 1.5rem; font-weight: 900; color: var(--azul); }
+        .kpi-title { font-size: 0.75rem; font-weight: 800; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 1.4rem; font-weight: 900; color: var(--azul); }
 
         .filter-group { background: white; padding: 15px 20px; border-radius: 10px; border-left: 5px solid var(--rojo); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
         .dropdown-menu-custom { max-height: 250px; overflow-y: auto; width: 100%; min-width: 180px; padding: 10px; }
         
-        .table-custom thead th { background-color: var(--azul) !important; color: white !important; }
+        .table-custom thead th { background-color: var(--azul) !important; color: white !important; font-weight: 600; font-size: 0.9rem; }
+        .table-custom tbody td { font-size: 0.9rem; vertical-align: middle; }
         #tablaResumen tbody tr { cursor: pointer; transition: 0.2s; }
         #tablaResumen tbody tr:hover { background-color: #e9ecef !important; }
         
@@ -44,39 +44,41 @@
 
 <div class="sidebar">
     <div class="logo-box">
-        <img src="logo.png" alt="Logo El Compadre" onerror="this.style.display='none';">
+        <img src="logo.png" alt="Logo El Compadre" onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<h4 style=\'color:var(--azul); margin:0; font-weight:900;\'>EL COMPADRE</h4>');">
     </div>
     <div class="p-4 mt-4">
-        <h6 class="text-white opacity-50 small fw-bold mb-3">MENÚ LOGÍSTICA</h6>
+        <h6 class="text-white opacity-50 small fw-bold mb-3">VISIÓN GERENCIAL</h6>
         <button class="btn btn-outline-light w-100 mb-3 text-start border-0 active" onclick="location.reload()">
-            <i class="fas fa-chart-line me-2"></i> Dashboard Costos
+            <i class="fas fa-chart-line me-2"></i> Auditoría Combustible
         </button>
     </div>
 </div>
 
 <div class="main-content">
     <div class="row align-items-center mb-4 g-3">
-        <div class="col-md-3"><h2 class="fw-bold mb-0" style="color: var(--azul);">Combustible 2026</h2></div>
+        <div class="col-md-3">
+            <h2 class="fw-black mb-0" style="color: var(--azul); letter-spacing: -1px;">Dashboard 2026</h2>
+        </div>
         <div class="col-md-9">
             <div class="filter-group d-flex gap-3 align-items-end justify-content-end flex-wrap">
                 <div class="dropdown flex-grow-1" style="max-width: 180px;">
-                    <label class="small fw-bold text-muted mb-1">Año:</label>
+                    <label class="small fw-bold text-muted mb-1"><i class="far fa-calendar-alt me-1"></i>Año:</label>
                     <button class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center" data-bs-toggle="dropdown">
-                        <span id="labelAno">Todos</span> <i class="fas fa-chevron-down ms-2"></i>
+                        <span>Seleccionar</span> <i class="fas fa-chevron-down ms-2" style="font-size: 0.7rem;"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-custom shadow" id="filterAno"></div>
                 </div>
                 <div class="dropdown flex-grow-1" style="max-width: 180px;">
-                    <label class="small fw-bold text-muted mb-1">Mes:</label>
+                    <label class="small fw-bold text-muted mb-1"><i class="far fa-calendar me-1"></i>Mes:</label>
                     <button class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center" data-bs-toggle="dropdown">
-                        <span id="labelMes">Todos</span> <i class="fas fa-chevron-down ms-2"></i>
+                        <span>Seleccionar</span> <i class="fas fa-chevron-down ms-2" style="font-size: 0.7rem;"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-custom shadow" id="filterMes"></div>
                 </div>
                 <div class="dropdown flex-grow-1" style="max-width: 180px;">
-                    <label class="small fw-bold text-muted mb-1">Semana:</label>
+                    <label class="small fw-bold text-muted mb-1"><i class="fas fa-list-ol me-1"></i>Semana:</label>
                     <button class="btn btn-outline-secondary w-100 text-start d-flex justify-content-between align-items-center" data-bs-toggle="dropdown">
-                        <span id="labelSemana">Todas</span> <i class="fas fa-chevron-down ms-2"></i>
+                        <span>Seleccionar</span> <i class="fas fa-chevron-down ms-2" style="font-size: 0.7rem;"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-custom shadow" id="filterSemana"></div>
                 </div>
@@ -85,32 +87,64 @@
     </div>
 
     <div class="row mb-4">
-        <div class="col-md-3"><div class="card card-custom p-3 border-start border-4 border-primary"><div class="kpi-title">Gasto Total</div><div class="kpi-value" id="kpi-total">L. 0.00</div></div></div>
-        <div class="col-md-3"><div class="card card-custom p-3 border-start border-4 border-success"><div class="kpi-title">Galones</div><div class="kpi-value text-success" id="kpi-galones">0.00</div></div></div>
-        <div class="col-md-3"><div class="card card-custom p-3 border-start border-4 border-info"><div class="kpi-title">Litros</div><div class="kpi-value text-info" id="kpi-litros">0.00</div></div></div>
-        <div class="col-md-3"><div class="card card-custom p-3 bg-danger text-white"><div class="small fw-bold opacity-75">TOP DEPTO</div><div class="h5 fw-bold mb-0 text-truncate" id="kpi-top">-</div></div></div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card card-custom h-100 p-3 border-start border-4 border-primary">
+                <div class="kpi-title">Gasto Total Acumulado</div>
+                <div class="kpi-value" id="kpi-total">L. 0.00</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card card-custom h-100 p-3 border-start border-4 border-success">
+                <div class="kpi-title">Volumen Total Abastecido</div>
+                <div class="kpi-value text-success" style="font-size: 1.1rem;">
+                    <i class="fas fa-gas-pump me-1"></i><span id="kpi-galones">0.00</span> Gal<br>
+                    <i class="fas fa-tint me-1 text-info"></i><span id="kpi-litros" class="text-info">0.00</span> Lts
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card card-custom h-100 p-3 border-start border-4 border-warning">
+                <div class="kpi-title">Precio Promedio x Galón</div>
+                <div class="kpi-value text-warning text-dark" id="kpi-precio-promedio">L. 0.00</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card card-custom h-100 p-3 bg-danger text-white">
+                <div class="kpi-title text-white opacity-75">Proveedor Principal</div>
+                <div class="h5 fw-bold mb-0 mt-2 text-truncate" id="kpi-proveedor">-</div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
             <div class="card card-custom p-4">
-                <h5 class="fw-bold mb-4 text-secondary">Resumen por Departamento</h5>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold text-secondary m-0"><i class="fas fa-hand-pointer text-primary me-2"></i>Análisis por Departamento (Clic para detalles)</h5>
+                </div>
                 <div class="table-responsive">
-                    <table id="tablaResumen" class="table table-striped table-bordered table-hover w-100 table-custom">
-                        <thead><tr><th>Departamento</th><th>Galones</th><th>Litros</th><th>Total Lps.</th></tr></thead>
+                    <table id="tablaResumen" class="table table-striped table-bordered table-hover align-middle w-100 table-custom">
+                        <thead>
+                            <tr>
+                                <th>Departamento</th>
+                                <th>Galones</th>
+                                <th>Litros</th>
+                                <th>Total Gasto (Lps)</th>
+                            </tr>
+                        </thead>
                         <tbody></tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="card card-custom p-4 mb-3">
-                <h6 class="fw-bold text-secondary mb-3">Distribución por Combustible</h6>
-                <div style="height: 220px;"><canvas id="chartTipos"></canvas></div>
+        <div class="col-md-4">
+            <div class="card card-custom p-4 mb-4">
+                <h6 class="fw-bold text-secondary mb-3">Gasto por Tipo Combustible</h6>
+                <div style="height: 240px;"><canvas id="chartTipos"></canvas></div>
             </div>
             <div class="card card-custom p-4">
-                <h6 class="fw-bold text-secondary mb-3">Top 10 Vehículos (Mayor Gasto)</h6>
-                <div style="height: 220px;"><canvas id="chartVehiculos"></canvas></div>
+                <h6 class="fw-bold text-secondary mb-3">Top 10 Vehículos (Gasto)</h6>
+                <div style="height: 240px;"><canvas id="chartVehiculos"></canvas></div>
             </div>
         </div>
     </div>
@@ -119,17 +153,33 @@
 <div class="modal fade" id="modalDetalle" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content card-custom overflow-hidden">
-            <div class="modal-header"><h5 class="modal-title fw-bold" id="modalTitle">Detalles</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="modalTitle">Auditoría de Movimientos</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
             <div class="modal-body p-4">
-                <div class="row mb-4 bg-light p-3 rounded g-3 border">
-                    <div class="col-md-4"><label class="small fw-bold">Año:</label><select class="form-select form-select-sm" id="modalFiltroAño"></select></div>
-                    <div class="col-md-4"><label class="small fw-bold">Mes:</label><select class="form-select form-select-sm" id="modalFiltroMes"></select></div>
-                    <div class="col-md-4"><label class="small fw-bold">Semana:</label><select class="form-select form-select-sm" id="modalFiltroSemana"></select></div>
+                <div class="row mb-4 bg-light p-3 rounded g-3 border align-items-end">
+                    <div class="col-md-3"><label class="small fw-bold text-primary">Año:</label><select class="form-select form-select-sm border-primary" id="modalFiltroAño"></select></div>
+                    <div class="col-md-3"><label class="small fw-bold text-primary">Mes:</label><select class="form-select form-select-sm border-primary" id="modalFiltroMes"></select></div>
+                    <div class="col-md-3"><label class="small fw-bold text-primary">Semana:</label><select class="form-select form-select-sm border-primary" id="modalFiltroSemana"></select></div>
                 </div>
-                <table id="tablaModalDetalle" class="table table-striped table-bordered w-100 small table-custom">
-                    <thead><tr><th>Fecha</th><th>Vehículo</th><th>Placa</th><th>Combustible</th><th>Cant.</th><th>Total Lps.</th><th>Proveedor</th></tr></thead>
-                    <tbody></tbody>
-                </table>
+                
+                <div class="table-responsive">
+                    <table id="tablaModalDetalle" class="table table-striped table-bordered table-hover w-100 small table-custom">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Semana</th>
+                                <th>Vehículo / Placa</th>
+                                <th>Combustible</th>
+                                <th>Cantidad</th>
+                                <th>Total Lps.</th>
+                                <th>Proveedor</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -149,18 +199,18 @@ let rawData = [], dtResumen, dtModal, chartTipos, chartVehiculos;
 let deptoActual = "";
 
 $(document).ready(function() {
-    dtResumen = $('#tablaResumen').DataTable({ 
+    // Configuración de Tablas
+    let dtConfig = {
         language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json' },
-        pageLength: 10, lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]], order: [[3, 'desc']]
-    });
-    dtModal = $('#tablaModalDetalle').DataTable({ 
-        language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json' },
-        pageLength: 15, order: [[0, 'desc']]
-    });
+        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
+    };
+
+    dtResumen = $('#tablaResumen').DataTable({ ...dtConfig, pageLength: 10, order: [[3, 'desc']] });
+    dtModal = $('#tablaModalDetalle').DataTable({ ...dtConfig, pageLength: 25, order: [[0, 'desc']] });
 
     $('.dropdown-menu').on('click', e => e.stopPropagation());
     
-    // Filtros Modal
+    // Cascada Modal
     $('#modalFiltroAño').on('change', () => { actFiltrosModal('ano'); filtrarTablaModal(); });
     $('#modalFiltroMes').on('change', () => { actFiltrosModal('mes'); filtrarTablaModal(); });
     $('#modalFiltroSemana').on('change', filtrarTablaModal);
@@ -194,12 +244,17 @@ function iniciarFiltros() {
 
     const buildCheck = (id, val) => `<div class="form-check filter-item"><input class="form-check-input chk-${id}" type="checkbox" value="${val}" checked onchange="aplicarCascada()"><label class="form-check-label">${val}</label></div>`;
     
-    $('#filterAno').html(años.map(a => buildCheck('ano', a)).join(''));
-    $('#filterMes').html(meses.map(m => buildCheck('mes', m)).join(''));
-    $('#filterSemana').html(semanas.map(s => buildCheck('sem', s)).join(''));
+    $('#filterAno').html(`<div class="form-check mb-2 border-bottom pb-2"><input class="form-check-input" type="checkbox" checked onchange="toggleAll(this, 'chk-ano')"><label class="fw-bold text-primary">Todos</label></div>` + años.map(a => buildCheck('ano', a)).join(''));
+    $('#filterMes').html(`<div class="form-check mb-2 border-bottom pb-2"><input class="form-check-input" type="checkbox" checked onchange="toggleAll(this, 'chk-mes')"><label class="fw-bold text-primary">Todos</label></div>` + meses.map(m => buildCheck('mes', m)).join(''));
+    $('#filterSemana').html(`<div class="form-check mb-2 border-bottom pb-2"><input class="form-check-input" type="checkbox" checked onchange="toggleAll(this, 'chk-sem')"><label class="fw-bold text-primary">Todas</label></div>` + semanas.map(s => buildCheck('sem', s)).join(''));
 
     $('#modalFiltroAño').html('<option value="TODOS">Todos</option>' + años.map(a => `<option value="${a}">${a}</option>`).join(''));
     
+    aplicarCascada();
+}
+
+function toggleAll(source, className) {
+    $(`.${className}`).prop('checked', source.checked);
     aplicarCascada();
 }
 
@@ -212,36 +267,62 @@ function aplicarCascada() {
     procesarDashboard(filtrados);
 }
 
+// Función para formatear dinero y decimales correctamente (US format: 1,000.00)
+function fmtNum(num) {
+    return num.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
+
 function procesarDashboard(datos) {
-    let resumen = {}, tipos = {}, vehiculos = {}, totalLps = 0, totalGal = 0, totalLit = 0;
+    let resumen = {}, tipos = {}, vehiculos = {}, proveedores = {};
+    let totalLps = 0, totalGal = 0, totalLit = 0, totalLpsGalones = 0;
 
     datos.forEach(r => {
         let depto = r.SOLICITANTE || 'SIN ESPECIFICAR';
-        // UNIFICACIÓN DE COMBUSTIBLE: Limpiar espacios y normalizar a mayúsculas
         let tipo = (r.COMBUSTIBLE || 'SIN ESPECIFICAR').trim().toUpperCase();
         let vehic = (r.VEHICULO || 'OTRO').trim().toUpperCase();
+        let prov = (r.PROVEEDOR || 'SIN ESPECIFICAR').trim().toUpperCase();
         let valor = parseFloat(r['TOTAL VALOR LPS']?.replace(/[L\s,]/g, '')) || 0;
         let cant = parseFloat(r.ABASTECIDO) || 0;
 
         if (!resumen[depto]) resumen[depto] = { gal: 0, lts: 0, costo: 0 };
         resumen[depto].costo += valor;
-        if (r.unidad === 'Gal') { resumen[depto].gal += cant; totalGal += cant; }
-        else { resumen[depto].lts += cant; totalLit += cant; }
+        
+        if (r.unidad === 'Gal') { 
+            resumen[depto].gal += cant; 
+            totalGal += cant; 
+            totalLpsGalones += valor; // Para calcular precio promedio
+        } else { 
+            resumen[depto].lts += cant; 
+            totalLit += cant; 
+        }
         
         totalLps += valor;
         tipos[tipo] = (tipos[tipo] || 0) + valor;
         vehiculos[vehic] = (vehiculos[vehic] || 0) + valor;
+        proveedores[prov] = (proveedores[prov] || 0) + valor;
     });
 
-    $('#kpi-total').text('L. ' + totalLps.toLocaleString('en-US', {minimumFractionDigits: 2}));
-    $('#kpi-galones').text(totalGal.toLocaleString('en-US'));
-    $('#kpi-litros').text(totalLit.toLocaleString('en-US'));
-    let top = Object.keys(resumen).length > 0 ? Object.keys(resumen).reduce((a, b) => resumen[a].costo > resumen[b].costo ? a : b) : '-';
-    $('#kpi-top').text(top);
+    // Actualizar KPIs
+    $('#kpi-total').text('L. ' + fmtNum(totalLps));
+    $('#kpi-galones').text(fmtNum(totalGal));
+    $('#kpi-litros').text(fmtNum(totalLit));
+    
+    // KPI Precio Promedio Galón
+    let precioPromedio = totalGal > 0 ? (totalLpsGalones / totalGal) : 0;
+    $('#kpi-precio-promedio').text('L. ' + fmtNum(precioPromedio));
 
+    // KPI Top Proveedor
+    let topProv = Object.keys(proveedores).length > 0 ? Object.keys(proveedores).reduce((a, b) => proveedores[a] > proveedores[b] ? a : b) : '-';
+    $('#kpi-proveedor').text(topProv);
+
+    // Llenar Tabla Principal con span oculto para ordenamiento matemático
     dtResumen.clear();
     for (let d in resumen) {
-        dtResumen.row.add([`<span class="fw-bold">${d}</span>`, resumen[d].gal.toFixed(2), resumen[d].lts.toFixed(2), 'L. ' + resumen[d].costo.toLocaleString()]);
+        let ordenGal = `<span class="d-none">${resumen[d].gal}</span>${fmtNum(resumen[d].gal)}`;
+        let ordenLts = `<span class="d-none">${resumen[d].lts}</span>${fmtNum(resumen[d].lts)}`;
+        let ordenCosto = `<span class="d-none">${resumen[d].costo}</span><span class="text-primary fw-bold">L. ${fmtNum(resumen[d].costo)}</span>`;
+        
+        dtResumen.row.add([ `<span class="fw-bold">${d}</span>`, ordenGal, ordenLts, ordenCosto ]);
     }
     dtResumen.draw();
 
@@ -251,9 +332,9 @@ function procesarDashboard(datos) {
 function renderCharts(tipos, vehiculos) {
     if (chartTipos) chartTipos.destroy();
     chartTipos = new Chart(document.getElementById('chartTipos'), {
-        type: 'doughnut',
+        type: 'pie',
         data: { labels: Object.keys(tipos), datasets: [{ data: Object.values(tipos), backgroundColor: ['#E1251B', '#012094', '#FFCE56', '#2ecc71'] }] },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { datalabels: { color: '#fff', formatter: (v, c) => {
+        options: { responsive: true, maintainAspectRatio: false, plugins: { datalabels: { color: '#fff', font: {weight: 'bold'}, formatter: (v, c) => {
             let sum = 0; c.chart.data.datasets[0].data.forEach(d => sum += d);
             return (v * 100 / sum).toFixed(1) + "%";
         }}}}
@@ -270,7 +351,7 @@ function renderCharts(tipos, vehiculos) {
 
 function abrirDetalle(depto) {
     deptoActual = $('<div>').html(depto).text(); 
-    $('#modalTitle').text('Detalles: ' + deptoActual);
+    $('#modalTitle').text('Auditoría: ' + deptoActual);
     $('#modalFiltroAño').val('TODOS');
     actFiltrosModal('ano');
     new bootstrap.Modal('#modalDetalle').show();
@@ -293,8 +374,20 @@ function actFiltrosModal(orig) {
 function filtrarTablaModal() {
     let año = $('#modalFiltroAño').val(), mes = $('#modalFiltroMes').val(), sem = $('#modalFiltroSemana').val();
     let f = rawData.filter(r => (r.SOLICITANTE || 'SIN ESPECIFICAR') === deptoActual && (año === 'TODOS' || r.AÑO === año) && (mes === 'TODOS' || r.MES === mes) && (sem === 'TODOS' || r.SEMANA === sem));
+    
     dtModal.clear();
-    f.forEach(r => dtModal.row.add([r.FECHA, r.VEHICULO, r['#PLACA'], (r.COMBUSTIBLE || '').trim().toUpperCase(), parseFloat(r.ABASTECIDO).toFixed(2) + ' ' + r.unidad, 'L. ' + parseFloat(r['TOTAL VALOR LPS']?.replace(/[L\s,]/g, '') || 0).toLocaleString(), r.PROVEEDOR]));
+    f.forEach(r => {
+        let cant = parseFloat(r.ABASTECIDO) || 0;
+        let valor = parseFloat(r['TOTAL VALOR LPS']?.replace(/[L\s,]/g, '')) || 0;
+        
+        let ordenCant = `<span class="d-none">${cant}</span>${fmtNum(cant)} ${r.unidad}`;
+        let ordenValor = `<span class="d-none">${valor}</span><span class="text-success fw-bold">L. ${fmtNum(valor)}</span>`;
+
+        dtModal.row.add([
+            r.FECHA || '-', r.SEMANA || '-', `${r.VEHICULO || ''} <br><small class="text-muted">${r['#PLACA'] || ''}</small>`, 
+            (r.COMBUSTIBLE || '').trim().toUpperCase(), ordenCant, ordenValor, r.PROVEEDOR || '-'
+        ]);
+    });
     dtModal.draw();
 }
 </script>
